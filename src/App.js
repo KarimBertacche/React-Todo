@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import TodoList from './components/TodoComponents/TodoList';
+import TodoList from './components/TodoComponents/TodoList';
 
 const toDoData = [
   {
@@ -29,24 +29,44 @@ class App extends Component {
   }
 
   addBtnHandler = () => {
-      // console.log('It was clicked!!')
-      const newTask = {
-        task: this.state.newItem,
-        id: Date.now(),
-        completed: false,
-      }
-
+    // console.log('It was clicked!!')
+    const newTask = {
+      task: this.state.newItem,
+      id: Date.now(),
+      completed: false,
+    }
+  
     this.setState({
-      toDoList: toDoData.concat(newTask),
+      toDoList: this.state.toDoList.concat(newTask),
       newItem: '',
     })
-
-
   }
-  
 
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
+  addKeyHandler = (event) => {
+    const newTask = {
+      task: this.state.newItem,
+      id: Date.now(),
+      completed: false,
+    }
+
+    if(event.key === 'Enter') {
+      this.setState({
+        toDoList: this.state.toDoList.concat(newTask),
+        newItem: '',
+      })
+    }  
+  }
+
+  // newObject = () => {
+  //   const newTask = {
+  //     task: this.state.newItem,
+  //     id: Date.now(),
+  //     completed: false,
+  //   }
+
+  //   return newTask;
+  // }
+  
   render() {
     return (
       <div>
@@ -56,47 +76,11 @@ class App extends Component {
           newItem={this.state.newItem}
           addedInput={this.newInputHandler}
           addBtn={this.addBtnHandler}
+          addKey={this.addKeyHandler}
           />
       </div>
     );
   }
-}
-
-function TodoList(props) {
-  return (
-    <div>
-      {
-        props.toDoList.map(el => {
-          return <Todo key={el.id} task={el.task} />;
-        })
-      }
-      <TodoForm newItem={props.newItem} addedItem={props.addedInput} addBtn={props.addBtn}/>
-    </div>
-  );
-}
-
-function Todo(props) {
-  return (
-    <div>{props.task}</div>
-  );
-}
-
-
-function TodoForm(props) {
-  return (
-    <div>
-      <input 
-        type="text" 
-        value={props.newItem} 
-        onChange={props.addedItem}
-        placeholder="Add Item" 
-      />
-      <button
-        onClick={props.addBtn}
-      >Add Item</button>
-    </div>
-      
-  );
 }
 
 export default App;
