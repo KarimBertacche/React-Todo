@@ -1,0 +1,66 @@
+.input-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -70px;
+    margin-bottom: 30px;  
+}
+
+input {
+    width: 30%;
+    height: 20px;
+    font-size: 1.5rem;
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+    border-left: 3px solid #000;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    outline: none;
+}
+
+.submit-btn,
+.clear-btn {
+    padding: 0 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: 3px solid #000;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    outline: none;
+}
+
+.clear-btn {
+    display: block;
+    width: 150px;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.submit-btn:hover,
+.clear-btn:hover {
+    color: #fff;
+    background-color: #000;
+    border: 3px solid #fff;
+}
+
+.todo-box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 5%;
+}
+
+.todo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #000;
+    border-radius: 10px;
+    width: 40%;
+    min-width: 300px;
+    padding: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    outline: none;
+}
