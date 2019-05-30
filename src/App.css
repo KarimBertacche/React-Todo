@@ -1,0 +1,15 @@
+.todo-wrapper {
+    background-color: orangered;
+    border: 3px solid #000;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.title {
+    font-size: 2.5rem;
+}
+
+.done {
+    text-decoration: line-through;
+    color: red;
+}
