@@ -1,12 +1,21 @@
 .input-wrapper {
     display: flex;
-    justify-content: flex-end;
-    margin-top: -70px;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: -90px;
     margin-bottom: 30px;  
 }
 
+.input-field {
+    display: flex;
+}
+
+.input-field:first-child {
+    margin-bottom: 10px;
+}
+
 input {
-    width: 30%;
+    width: 350px;
     height: 20px;
     font-size: 1.5rem;
     border-top: 3px solid #000;
@@ -15,6 +24,7 @@ input {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     outline: none;
+    padding-left: 5px;
 }
 
 .submit-btn,
@@ -35,6 +45,14 @@ input {
     margin: 0 auto;
     border-radius: 5px;
     padding: 5px;
+}
+
+.show-btn {
+    border-radius: 0;
+    margin-right: -5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    z-index: 3;
 }
 
 .submit-btn:hover,

@@ -12,6 +12,11 @@ export default function TodoList(props) {
             addedItem={props.addedInput} 
             addBtn={props.addBtn} 
             addKey={props.addKey}
+            searchValue={props.searchValue}
+            searchInput={props.searchInput}
+            search={props.search}
+            show={props.show}
+            clearData={props.clearData}
             />
             <div className="todo-box">
                 {

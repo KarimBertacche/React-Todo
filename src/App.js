@@ -23,7 +23,14 @@ class App extends Component {
       toDoList: toDoData,
       newItem: '',
       id: null,
+      searchInput: '', 
     }
+  }
+
+  componentWillMount() {
+    localStorage.getItem('toDoListData') && this.setState({
+      toDoList: JSON.parse(localStorage.getItem('toDoListData')),
+    })
   }
 
   newInputHandler = (event) => {
@@ -74,11 +81,47 @@ class App extends Component {
     }))
   }
 
-  eraseTaskHandler = (event) => {
-    console.log();
-    this.setState({
-      toDoList: this.state.toDoList.filter(todo => todo.completed === false) 
+  eraseTaskHandler = () => {
+    this.setState(prevState => ({
+      toDoList: prevState.toDoList.filter(todo => todo.completed === false) 
+    }))
+  }
+
+  searchInputHandler = (event) => {
+    this.setState({ 
+      searchInput: event.target.value,
+    });
+  }
+
+  searchTodoHandler = () => {
+    let todoItem = this.state.toDoList.filter(todo => {
+      return todo.task.toLowerCase().startsWith(this.state.searchInput.toLowerCase());
     })
+
+    this.setState({
+      toDoList: todoItem,  
+    })
+    // let oldTodo = this.state.toDoList.slice();
+    // let updatedTodo = oldTodo.map(todo => {
+    //   if(todoItem[0].id === todo.id) {
+    //     oldTodo.slice(todo);
+    //   }
+    // })
+    // let newTodo = [...todoItem, ...oldTodo]  
+  }
+
+  showTodosHandler = () => {
+    this.setState({
+      toDoList: toDoData,
+    })
+  }
+
+  clearStorageData = () => {
+    localStorage.clear();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('toDoListData', JSON.stringify(nextState.toDoList))
   }
 
   render() {
@@ -93,7 +136,11 @@ class App extends Component {
           addKey={this.addKeyHandler}
           clicked={this.taskCompletedHandler}
           delete={this.eraseTaskHandler}
-          // completed={this.props.completed}
+          searchValue={this.state.searchInput}
+          searchInput={this.searchInputHandler}
+          search={this.searchTodoHandler}
+          show={this.showTodosHandler}
+          clearData={() => this.clearStorageData(window.location.reload())}
           />
       </div>
     );
