@@ -22,6 +22,7 @@ class App extends Component {
     this.state = {
       toDoList: toDoData,
       newItem: '',
+      id: null,
     }
   }
 
@@ -31,11 +32,7 @@ class App extends Component {
 
   addBtnHandler = (event) => {
     // console.log('It was clicked!!')
-    const newTask = {
-      task: this.state.newItem,
-      id: Date.now(),
-      completed: false,
-    }
+    const newTask = this.newTaskHandler();
 
     if(this.state.newItem !== '') {
       this.setState({
@@ -45,12 +42,17 @@ class App extends Component {
     }
   }
 
-  addKeyHandler = (event) => {
+  newTaskHandler = () => {
     const newTask = {
       task: this.state.newItem,
       id: Date.now(),
       completed: false,
     }
+    return newTask;
+  }
+
+  addKeyHandler = (event) => {
+    const newTask = this.newTaskHandler();
 
     if(event.key === 'Enter' && event.target.value !== '') {
       this.setState({
@@ -60,15 +62,23 @@ class App extends Component {
     }  
   }
 
-  taskCompletedHandler = (event) => {  
-    event.target.classList.toggle('done');
+  taskCompletedHandler = (event, id) => { 
+    event.target.classList.add('done');
+    this.setState(prevState => ({
+      toDoList: prevState.toDoList.map(todo => {
+        if(todo.id === id && todo.completed === false) {
+          todo.completed = true;       
+        }
+        return todo;
+      })
+    }))
   }
 
   eraseTaskHandler = (event) => {
     console.log();
-    // if(event.target.className === 'done') {
-    
-    // }
+    this.setState({
+      toDoList: this.state.toDoList.filter(todo => todo.completed === false) 
+    })
   }
 
   render() {

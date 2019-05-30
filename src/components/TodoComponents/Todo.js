@@ -4,7 +4,7 @@ export default function Todo(props) {
     return (
         <button 
             className="todo" 
-            onClick={props.clicked} 
+            onClick={(event) => props.clicked(event, props.todoListID)} 
         >{props.task}</button>
     );
 }

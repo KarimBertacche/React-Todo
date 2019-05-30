@@ -15,8 +15,8 @@ export default function TodoList(props) {
             />
             <div className="todo-box">
                 {
-                    props.toDoList.map(el => {
-                    return <Todo key={el.id} clicked={props.clicked} task={el.task} completed={el.completed} />;
+                    props.toDoList.map(todo => {
+                    return <Todo key={todo.id} clicked={props.clicked} task={todo.task} todoListID={todo.id} completed={todo.completed} />;
                     })
                 }
             </div>
