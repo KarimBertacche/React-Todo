@@ -12,11 +12,16 @@ export default function TodoList(props) {
             addedItem={props.addedInput} 
             addBtn={props.addBtn} 
             addKey={props.addKey}
+            searchValue={props.searchValue}
+            searchInput={props.searchInput}
+            search={props.search}
+            show={props.show}
+            clearData={props.clearData}
             />
             <div className="todo-box">
                 {
-                    props.toDoList.map(el => {
-                    return <Todo key={el.id} clicked={props.clicked} task={el.task} completed={el.completed} />;
+                    props.toDoList.map(todo => {
+                    return <Todo key={todo.id} clicked={props.clicked} task={todo.task} todoListID={todo.id} completed={todo.completed} />;
                     })
                 }
             </div>

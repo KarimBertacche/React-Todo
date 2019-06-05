@@ -22,7 +22,15 @@ class App extends Component {
     this.state = {
       toDoList: toDoData,
       newItem: '',
+      id: null,
+      searchInput: '', 
     }
+  }
+
+  componentWillMount() {
+    localStorage.getItem('toDoListData') && this.setState({
+      toDoList: JSON.parse(localStorage.getItem('toDoListData')),
+    })
   }
 
   newInputHandler = (event) => {
@@ -31,11 +39,7 @@ class App extends Component {
 
   addBtnHandler = (event) => {
     // console.log('It was clicked!!')
-    const newTask = {
-      task: this.state.newItem,
-      id: Date.now(),
-      completed: false,
-    }
+    const newTask = this.newTaskHandler();
 
     if(this.state.newItem !== '') {
       this.setState({
@@ -45,12 +49,17 @@ class App extends Component {
     }
   }
 
-  addKeyHandler = (event) => {
+  newTaskHandler = () => {
     const newTask = {
       task: this.state.newItem,
       id: Date.now(),
       completed: false,
     }
+    return newTask;
+  }
+
+  addKeyHandler = (event) => {
+    const newTask = this.newTaskHandler();
 
     if(event.key === 'Enter' && event.target.value !== '') {
       this.setState({
@@ -60,15 +69,59 @@ class App extends Component {
     }  
   }
 
-  taskCompletedHandler = (event) => {  
-    event.target.classList.toggle('done');
+  taskCompletedHandler = (event, id) => { 
+    event.target.classList.add('done');
+    this.setState(prevState => ({
+      toDoList: prevState.toDoList.map(todo => {
+        if(todo.id === id && todo.completed === false) {
+          todo.completed = true;       
+        }
+        return todo;
+      })
+    }))
   }
 
-  eraseTaskHandler = (event) => {
-    console.log();
-    // if(event.target.className === 'done') {
-    
-    // }
+  eraseTaskHandler = () => {
+    this.setState(prevState => ({
+      toDoList: prevState.toDoList.filter(todo => todo.completed === false) 
+    }))
+  }
+
+  searchInputHandler = (event) => {
+    this.setState({ 
+      searchInput: event.target.value,
+    });
+  }
+
+  searchTodoHandler = () => {
+    let todoItem = this.state.toDoList.filter(todo => {
+      return todo.task.toLowerCase().startsWith(this.state.searchInput.toLowerCase());
+    })
+
+    this.setState({
+      toDoList: todoItem,  
+    })
+    // let oldTodo = this.state.toDoList.slice();
+    // let updatedTodo = oldTodo.map(todo => {
+    //   if(todoItem[0].id === todo.id) {
+    //     oldTodo.slice(todo);
+    //   }
+    // })
+    // let newTodo = [...todoItem, ...oldTodo]  
+  }
+
+  showTodosHandler = () => {
+    this.setState({
+      toDoList: toDoData,
+    })
+  }
+
+  clearStorageData = () => {
+    localStorage.clear();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('toDoListData', JSON.stringify(nextState.toDoList))
   }
 
   render() {
@@ -83,7 +136,11 @@ class App extends Component {
           addKey={this.addKeyHandler}
           clicked={this.taskCompletedHandler}
           delete={this.eraseTaskHandler}
-          // completed={this.props.completed}
+          searchValue={this.state.searchInput}
+          searchInput={this.searchInputHandler}
+          search={this.searchTodoHandler}
+          show={this.showTodosHandler}
+          clearData={() => this.clearStorageData(window.location.reload())}
           />
       </div>
     );
